@@ -1,0 +1,275 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.min.css">
+    <link rel="stylesheet" href="../styles/admin_dd.css">
+</head>
+<body>
+    <!-- navbar -->
+    <navbar>
+        <div class="navbar navbar-expand-lg navbar-dark custom-bg">
+        <div class="container-fluid">
+            <a class="navbar-brand fs-3 fw-bold " href="#" ><i class="bi bi-fork-knife"></i> FoodHUB </a>
+            <button class="navbar-toggler " type="button" data-bs-toggle="collapse" data-bs-target="#navMenus">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse " id="navMenus">
+                <ul class="navbar-nav ms-auto align-items-center">
+                    <li class="nav-item active d-flex">
+                        <div><a class="nav-link text-light fs-3"><i class="bi bi-person-circle"></i></a></div>
+                        <div class="fs-5">
+                            <div id="userName" class="fw-semibold small ps-1">Admin</div>
+                            <div id="userEmail" class="small ps-1"> admin@gmail.com</div>
+                        </div>
+                    </li>
+                    <li class="nav-item">
+                        <button class="btn-light custom-btn m-2" id="themeToggle"><i class="bi bi-moon-stars-fill"></i></button>
+                    </li>
+                    <li class="nav-item">
+                        <button id="logoutBtn" class="btn btn-outline-light ms-2">
+                            <i class="bi bi-box-arrow-right"></i> Logout
+                        </button>
+                    </li>
+                </ul>
+            </div>
+        </div>
+        </div>
+    </navbar>
+
+    <div class="container-fluid">
+
+        <div class="row">
+            <div class="col-md-2 sidebar ">
+                <ul class="list-group rounded-0 ">
+
+                    <li class="list-group-item menu-item active custom-bg fw-bold"
+                        data-section="dashboard">
+
+                        <i class="bi bi-speedometer2 me-2"></i>
+                        Dashboard
+                    </li>
+
+                    <li class="list-group-item menu-item fw-bold custom-bg"
+                        data-section="customers">
+
+                        <i class="bi bi-people me-2"></i>
+                        Customers
+                    </li>
+
+                    <li class="list-group-item menu-item fw-bold custom-bg"
+                        data-section="tables">
+
+                        <i class="bi bi-grid-3x3-gap me-2"></i>
+                        Tables
+                    </li>
+
+                    <li class="list-group-item menu-item fw-bold custom-bg"
+                        data-section="bookings">
+
+                        <i class="bi bi-calendar-check me-2"></i>
+                        Reservations
+                    </li>
+
+                    <li class="list-group-item menu-item fw-bold custom-bg"
+                        data-section="trash">
+
+                        <i class="bi bi-trash me-2"></i>
+                        Trash
+                    </li>
+
+                </ul>
+            </div>
+
+            <div class="col-md-10">
+
+                <section id="dashboard" class="mt-5">
+                    <h4>Dashboard</h4>
+                    <div class="row ">
+                        <div class="col-md-3">
+                            <div class="card custom-bg">
+                                <div class="card-body text-center">
+                                    <h5>Tables </h5>
+                                    <h3 id="tableCount"> 0</h3>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-md-3">
+                            <div class="card custom-bg">
+                                <div class="card-body text-center">
+                                    <h5>Customers </h5>
+                                    <h3 id="CustomerCount"> 0</h3>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-md-3">
+                            <div class="card custom-bg">
+                                <div class="card-body text-center">
+                                    <h5>Reservations </h5>
+                                    <h3 id="ReserveCount"> 0</h3>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-md-3">
+                            <div class="card custom-bg">
+                                <div class="card-body text-center">
+                                    <h5>Available Tables </h5>
+                                    <h3 id="AvailableCount"> 0</h3>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+
+                <section id="customers" class="mt-5">
+                    <div class="d-flex justify-content-between align-items-center mb-3">
+                        <h3>Customer Management</h3>
+                        <input type="text" id="studentSearch" class="form-control w-25" placeholder="Search Customer .." >
+                    </div>
+
+                    <div class="table-responsive">
+                        <table class="table table-bordered table-hover">
+                            <thead class="table-primary">
+                                <tr>
+                                    <th>Name</th>
+                                    <th>Phone</th>
+                                    <th>Email</th>
+                                    <th>Date of birth</th>
+                                    <th>Address</th>
+                                </tr>
+                            </thead>
+
+                            <tbody id="customerTableBody">
+
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <div
+                        id="customerPagination"
+                        class="d-flex justify-content-center mt-3">
+                    </div>
+                </section>
+
+                <section id="tables" class="mt-5">
+                    <div class="d-flex justify-content-between align-items-center mb-3">
+                        <h3>Tables Management</h3>
+                        <button type="button" class="btn btn-primary custom-bg" data-bs-toggle="modal" data-bs-target="#AddTableModal">Add</button>
+                    </div>
+
+                    <div class="modal " id="AddTableModal">
+                        <div class="modal-dialog">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h3 class="modal-title"> Table Details </h3>
+                                    <button class="btn-close" data-bs-dismiss="modal" type="button"></button>
+                                </div>
+                                <div class="modal-body">
+                                    <form id="TableDetailsForm">
+                                        <div class="mb-3">
+                                            <label class="form-label">Table ID</label>
+                                            <input type="text" id="tableId" class="form-control" placeholder="Table ID" required>
+                                        </div>
+
+                                        <div class="mb-3">
+                                            <label class="form-label">Table No.</label>
+                                            <input type="number" id="tableNo" class="form-control" placeholder="Table No" required>
+                                        </div>
+
+                                        <div class="mb-3">
+                                            <label class="form-label">Capacity</label>
+                                            <input type="number" id="capacity" class="form-control" placeholder="Seat Count" required>
+                                        </div>
+
+                                        <div class="mb-3">
+                                            <label>Dining Type</label>
+                                            <select class="form-control" id="diningType">
+                                                <option value="diningType">select Dining</option>
+                                                <option value="Outdoor">Outdoor</option>
+                                                <option value="Indoor">Indoor</option>
+                                                <option value="Rooftop">Rooftop</option>
+                                            </select>
+                                        </div>
+
+                                        <div class="mb-3">
+                                            <label>Table Type</label>
+                                            <select class="form-control" id="tableType">
+                                                <option value="TableType">select Table</option>
+                                                <option value="family">Family Dining</option>
+                                                <option value="Couple">Couple Dining</option>
+                                                <option value="vip">VIP Dining</option>
+                                                <option value="private">Private Dining</option>
+                                            </select>
+                                        </div>
+
+                                        <div class="mb-3">
+                                            <label class="form-label">Status</label>
+                                            <input type="radio" name="status" value="Available">Available</input>
+                                            <input type="radio" name="status" value="Not Available">Booked </input>
+                                        </div>
+
+                                        <div class="mb-3">
+                                            <label class="form-label">Price</label> 
+                                            <input type="number" class="form-control" id="price" placeholder="Enter Price" required>
+                                        </div>
+
+                                    </form>
+                                </div>
+                                <div class="modal-footer">
+                                    <button class="btn btn-secondary" data-bs-dismiss="modal" type="button">Close</button>
+                                    <button class="btn btn-primary" id="SaveTableDetails" type="button">Save</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="table-responsive">
+                        <table class=" table table-bordered">
+                            <thead class="table-warning">
+                                <tr>
+                                    <th> TableID </th>
+                                    <th> TableNo </th>
+                                    <th> Capacity </th>
+                                    <th> Table Type </th>
+                                    <th> Dining Type </th>
+                                    <th> Price </th>
+                                    <th> Status </th>
+                                    <th> Actions </th>
+                                </tr>
+                            </thead>
+                            <tbody id="TablesDetailBody">
+
+                            </tbody>
+                        </table>
+
+                        <div
+                            id="TablesPagination"
+                            class="d-flex justify-content-center mt-3">
+                        </div>
+                    </div>
+                </section>
+
+
+            </div>
+        </div>
+    </div>
+
+
+    
+    <!-- <h1> Admin dashboard</h1> -->
+    
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js" integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.26.25/dist/sweetalert2.all.min.js"></script>
+    <script src="../scripts/admin_dashboard.js"></script>
+    <script src="../scripts/configure.js"></script>
+
+</body>
+</html>

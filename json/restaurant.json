@@ -1,0 +1,53 @@
+{
+  "admin": [
+    {
+      "id": "1",
+      "email": "admin@gmail.com",
+      "password": "Admin@123"
+    }
+  ],
+  "customers": [
+    {
+      "name": "Haripriya K",
+      "dob": "2026-06-26",
+      "email": "haripriya@gmail.com",
+      "phone": "9087899087",
+      "password": "Hari@123",
+      "address": "125-Ram street,\nCoimbatore",
+      "id": "iJ-pwh7Usn8"
+    },
+    {
+      "name": "Devasree",
+      "dob": "2026-06-25",
+      "email": "devasree@gmail.com",
+      "phone": "9089908900",
+      "password": "Devasree@123",
+      "address": "Visaka nagar,\nMuthalipalayam,Coimbatore",
+      "id": "NKMASqbfNBw"
+    }
+  ],
+  "tables": [
+    {
+      "tableId": "F101",
+      "tableNo": "1",
+      "capacity": "6",
+      "tableType": "family",
+      "DiningType": "Indoor",
+      "Price": "200",
+      "Status": "Available",
+      "id": "32EOhUw7G-4"
+    },
+    {
+      "tableId": "F102",
+      "tableNo": "2",
+      "capacity": "8",
+      "tableType": "family",
+      "diningType": "Rooftop",
+      "price": "1000",
+      "status": "Available",
+      "id": "5seZsy61EUM"
+    }
+  ],
+  "bookingDetails": [],
+  "$schema": "./node_modules/json-server/schema.json"
+}
