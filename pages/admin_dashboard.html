@@ -189,9 +189,9 @@
                                         </div>
 
                                         <div class="mb-3">
-                                            <label>Dining Type</label>
-                                            <select class="form-control" id="diningType">
-                                                <option value="diningType">select Dining</option>
+                                            <label>Dining area</label>
+                                            <select class="form-control" id="diningArea">
+                                                <option value="diningArea">select Dining</option>
                                                 <option value="Outdoor">Outdoor</option>
                                                 <option value="Indoor">Indoor</option>
                                                 <option value="Rooftop">Rooftop</option>
@@ -238,9 +238,9 @@
                                     <th> TableNo </th>
                                     <th> Capacity </th>
                                     <th> Table Type </th>
-                                    <th> Dining Type </th>
+                                    <th> Dining area </th>
                                     <th> Price </th>
-                                    <th> Status </th>
+                                    <!-- <th> Status </th> -->
                                     <th> Actions </th>
                                 </tr>
                             </thead>
@@ -254,6 +254,30 @@
                             class="d-flex justify-content-center mt-3">
                         </div>
                     </div>
+                </section>
+
+
+                <section id="trash" class="mt-5 d-none">
+                    <h3>Trash</h3>
+
+                    <table class="table table-bordered">
+                        <thead class="table-danger">
+                            <tr>
+                                <th>Table ID</th>
+                                <th>Table No</th>
+                                <th>Capacity</th>
+                                <th>Type</th>
+                                <th>Dining</th>
+                                <th>Price</th>
+                                <th>Restore</th>
+                            </tr>
+                        </thead>
+
+                        <tbody id="TrashTableBody">
+
+                        </tbody>
+
+                    </table>
                 </section>
 
 

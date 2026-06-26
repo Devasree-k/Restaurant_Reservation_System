@@ -24,30 +24,72 @@
       "password": "Devasree@123",
       "address": "Visaka nagar,\nMuthalipalayam,Coimbatore",
       "id": "NKMASqbfNBw"
+    },
+    {
+      "name": "Danusree",
+      "dob": "2005-05-26",
+      "email": "danusree@gmail.com",
+      "phone": "7867989087",
+      "password": "Danusree@123",
+      "address": "Town hall,Ukkadam\nCoimbatore",
+      "id": "O6tAh2XxIPc"
     }
   ],
   "tables": [
-    {
-      "tableId": "F101",
-      "tableNo": "1",
-      "capacity": "6",
-      "tableType": "family",
-      "DiningType": "Indoor",
-      "Price": "200",
-      "Status": "Available",
-      "id": "32EOhUw7G-4"
-    },
     {
       "tableId": "F102",
       "tableNo": "2",
       "capacity": "8",
       "tableType": "family",
-      "diningType": "Rooftop",
+      "diningArea": "Rooftop",
       "price": "1000",
-      "status": "Available",
-      "id": "5seZsy61EUM"
+      "id": "5seZsy61EUM",
+      "deleted": true
+    },
+    {
+      "tableId": "C101",
+      "tableNo": "2",
+      "capacity": "2",
+      "tableType": "Couple",
+      "diningArea": "Indoor",
+      "price": "500",
+      "id": "XUiy5GRubNM"
+    },
+    {
+      "tableId": "F101",
+      "tableNo": "2",
+      "capacity": "6",
+      "tableType": "family",
+      "diningArea": "Indoor",
+      "price": "200",
+      "id": "H3T4MVwFAC8"
+    },
+    {
+      "tableId": "F103",
+      "tableNo": "1",
+      "capacity": "6",
+      "tableType": "family",
+      "diningArea": "Indoor",
+      "price": "200",
+      "id": "Q1qyeP6S0hI",
+      "deleted": false
+    },
+    {
+      "tableId": "V101",
+      "tableNo": "1",
+      "capacity": "6",
+      "tableType": "vip",
+      "diningArea": "Indoor",
+      "price": "1500",
+      "id": "5NYj5_u1jDo",
+      "deleted": false
     }
   ],
-  "bookingDetails": [],
+  "bookingDetails": [
+
+  ],
+  "slots":[
+
+  ],
   "$schema": "./node_modules/json-server/schema.json"
 }

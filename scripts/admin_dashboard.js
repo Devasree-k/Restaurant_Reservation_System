@@ -1,4 +1,6 @@
 let allCustomers=[];
+let allTables=[];
+let editingId=null;
 
 $(document).ready(async function(){
 
@@ -91,11 +93,31 @@ async function saveTable() {
         tableNo: document.getElementById("tableNo").value,
         capacity: document.getElementById("capacity").value,
         tableType: document.getElementById("tableType").value,
-        diningType: document.getElementById("diningType").value,
+        diningArea: document.getElementById("diningArea").value,
         price: document.getElementById("price").value,
         status: status?status.value:""
 
     };
+
+    if(editingId){
+        const response=await fetch(`${API.tables}/${editingId}`,{
+            method: "PUT",
+            headers: {"Content-Type":"application/json"},
+            body: JSON.stringify({...tableData, id:editingId})
+        });
+        if(response.ok){
+            Swal.fire({
+                icon:"success",
+                title:"Table updated"
+            });
+            editingId=null;
+            loadTableDetails();
+            bootstrap.Modal.getInstance(
+                document.getElementById("AddTableModal")
+            ).hide();
+            return;
+        }
+    }
 
     try{
         const response=await fetch(API.tables,{
@@ -108,6 +130,7 @@ async function saveTable() {
                 icon:"success",
                 title:"Table added"
             });
+
             loadTableDetails();
 
             bootstrap.Modal.getInstance(
@@ -120,17 +143,20 @@ async function saveTable() {
     
 }
 
-
+//fetch and load all the table details
 async function loadTableDetails() {
     try{
         const response=await fetch(API.tables);
-        const tables=await response.json();
-        displayTables(tables);
+        allTables=await response.json();
+        displayTables(allTables.filter(t=>!t.deleted));
+        displayTrash(allTables.filter(t=>t.deleted));
     }catch(error){
         console.error("Table loading error",error);
     }
 }
 
+
+//display the tables 
 function displayTables(tables) {
     const tbody = document.getElementById("TablesDetailBody");
     tbody.innerHTML = "";
@@ -143,14 +169,14 @@ function displayTables(tables) {
                 <td>${table.tableNo}</td>
                 <td>${table.capacity}</td>
                 <td>${table.tableType}</td>
-                <td>${table.diningType}</td>
+                <td>${table.diningArea}</td>
                 <td>₹${table.price}</td>
-                <td>${table.status}</td>
+                <!--<td>${table.status}</td>-->
                 <td>
-                    <button class="btn btn-warning btn-sm">
+                    <button class="btn btn-warning btn-sm"  onclick="editTable('${table.tableId}')">
                         Edit
                     </button>
-                    <button class="btn btn-danger btn-sm">
+                    <button class="btn btn-danger btn-sm" onclick="deleteTable('${table.tableId}')">
                         Delete
                     </button>
                 </td>
@@ -159,5 +185,105 @@ function displayTables(tables) {
     });
 }
 
+//Soft delete function
+async function deleteTable(tableId) {
+    const table=allTables.find(table=>table.tableId===tableId);
+    if(!table){
+        return;
+    }
+
+    if(table.status==="Booked"){
+        Swal.fire("The table is currently booked");
+        return;
+    }
+
+    const result = await Swal.fire({
+        title: "Delete Table?",
+        text: "The table details will be moved to trash",
+        icon: "warning",
+        showCancelButton: true,
+        confirmButtonColor: "#d33",
+        cancelButtonColor: "#3085d6",
+        confirmButtonText: "Yes, Delete"
+    });
+    if (!result.isConfirmed) return;
+
+    table.deleted=true;
+    try{
+
+        await fetch(`${API.tables}/${table.id}`,
+            {
+                method: "PUT",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({...table,deleted: true})
+            }
+        );
+
+        await loadTableDetails();
+        await DashboardCount();
+
+        alert("table moved to trash");
+    }
+    catch(error){
+        console.error( "Delete Error",  error);
+    }
+}
+
+//display the deleted items in trash
+function displayTrash(tables){
+    const tbody=document.getElementById("TrashTableBody");
+    tbody.innerHTML="";
+
+    tables.forEach(table=>{
+        tbody.innerHTML+=`
+        <tr>
+        <td>${table.tableId}</td>
+        <td>${table.tableNo}</td>
+        <td>${table.capacity}</td>
+        <td>${table.tableType}</td>
+        <td>${table.diningArea}</td>
+        <td>₹${table.price}</td>
+        <td>
+        <button class="btn btn-primary" onclick="restoreTable('${table.id}')">
+        Restore
+        </button>
+        </tr>
+        `;
+    })
+}
+
+//restore function
+async function restoreTable(id) {
+    const table=allTables.find(t=>t.id===id);
+    table.deleted=false;
+    await fetch(`${API.tables}/${id}`,{
+        method:"PUT",
+        headers:{"Content-Type":"application/json"},
+        body:JSON.stringify(table)
+    });
+    loadTableDetails();
+}
+
+//edit table function
+function editTable(tableId){
+
+    const table = allTables.find(t => t.tableId === tableId);
+    editingId=table.id;
+    if(!table) return;
+    document.getElementById("tableId").value = table.tableId;
+    document.getElementById("tableNo").value = table.tableNo;
+    document.getElementById("capacity").value = table.capacity;
+    document.getElementById("tableType").value = table.tableType;
+    document.getElementById("diningArea").value = table.diningArea;
+    document.getElementById("price").value = table.price;
+
+    if(table.status === "Available"){
+        document.querySelector('input[name="status"][value="Available"]').checked = true;
+    }else{
+        document.querySelector('input[name="status"][value="Not Available"]').checked = true;
+    }
+
+    new bootstrap.Modal(document.getElementById("AddTableModal")).show();
+}
 
 
