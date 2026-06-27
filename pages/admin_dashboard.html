@@ -26,9 +26,9 @@
                             <div id="userEmail" class="small ps-1"> admin@gmail.com</div>
                         </div>
                     </li>
-                    <li class="nav-item">
+                    <!-- <li class="nav-item">
                         <button class="btn-light custom-btn m-2" id="themeToggle"><i class="bi bi-moon-stars-fill"></i></button>
-                    </li>
+                    </li> -->
                     <li class="nav-item">
                         <button id="logoutBtn" class="btn btn-outline-light ms-2">
                             <i class="bi bi-box-arrow-right"></i> Logout
@@ -128,6 +128,87 @@
                 </section>
 
 
+                <section id="bookings" class="mt-5 d-none">
+                    <div class="d-flex justify-content-between align-items-center mb-3">
+                        <h3>Reservation Management</h3>
+                            <div class="row mb-3">
+
+                                <div class="col-md-3">
+                                    <input
+                                        type="text"
+                                        id="bookingSearch"
+                                        class="form-control"
+                                        placeholder="Search Reservation">
+                                </div>
+
+                                <div class="col-md-2">
+                                    <select id="bookingStatusFilter" class="form-select">
+                                        <option value="">All Status</option>
+                                        <option>Booked</option>
+                                        <option>Cancelled</option>
+                                        <option>Completed</option>
+                                    </select>
+                                </div>
+
+                                <div class="col-md-2">
+                                    <select id="sessionFilter" class="form-select">
+                                        <option value="">All Sessions</option>
+                                        <option>Breakfast</option>
+                                        <option>Lunch</option>
+                                        <option>Dinner</option>
+                                    </select>
+                                </div>
+
+                                <div class="col-md-2">
+                                    <input
+                                        type="date"
+                                        id="bookingDateFilter"
+                                        class="form-control">
+                                </div>
+
+                                <div class="col-md-3">
+                                    <select id="bookingSort" class="form-select">
+                                        <option value="">Sort By</option>
+                                        <option value="newest">Newest Booking</option>
+                                        <option value="oldest">Oldest Booking</option>
+                                        <option value="customerAZ">Customer A-Z</option>
+                                        <option value="customerZA">Customer Z-A</option>
+                                        <option value="guestLow">Guest Count ↑</option>
+                                        <option value="guestHigh">Guest Count ↓</option>
+                                    </select>
+                                </div>
+
+                            </div>
+                    </div>
+
+                    <div class="table-responsive">
+                        <table class="table table-bordered table-hover table-striped">
+                            <thead class="table-success">
+                                <tr>
+                                    <th>Customer</th>
+                                    <th>Phone</th>
+                                    <th>Table</th>
+                                    <th>Date</th>
+                                    <th>Session</th>
+                                    <th>Slot</th>
+                                    <th>Guests</th>
+                                    <th>Status</th>
+                                </tr>
+                            </thead>
+
+                            <tbody id="ReservationTableBody">
+
+                            </tbody>
+                        </table>
+
+                    </div>
+                    <div
+                        id="ReservationPagination"
+                        class="d-flex justify-content-center mt-3">
+                    </div>
+                </section>
+
+
                 <section id="customers" class="mt-5">
                     <div class="d-flex justify-content-between align-items-center mb-3">
                         <h3>Customer Management</h3>
@@ -135,7 +216,7 @@
                     </div>
 
                     <div class="table-responsive">
-                        <table class="table table-bordered table-hover">
+                        <table class="table table-bordered table-hover table-striped">
                             <thead class="table-primary">
                                 <tr>
                                     <th>Name</th>
@@ -231,7 +312,7 @@
                     </div>
 
                     <div class="table-responsive">
-                        <table class=" table table-bordered">
+                        <table class=" table table-bordered table-hover table-striped">
                             <thead class="table-warning">
                                 <tr>
                                     <th> TableID </th>
@@ -260,8 +341,8 @@
                 <section id="trash" class="mt-5 d-none">
                     <h3>Trash</h3>
 
-                    <table class="table table-bordered">
-                        <thead class="table-danger">
+                    <table class="table table-bordered table-hover table-striped ">
+                        <thead class="table-danger custom-color">
                             <tr>
                                 <th>Table ID</th>
                                 <th>Table No</th>
@@ -279,7 +360,6 @@
 
                     </table>
                 </section>
-
 
             </div>
         </div>

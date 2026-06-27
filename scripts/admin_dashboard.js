@@ -1,6 +1,13 @@
 let allCustomers=[];
 let allTables=[];
+let allReservations=[];
 let editingId=null;
+
+const rows_per_page=10;
+let customerPage = 1;
+let tablePage = 1;
+let reservationPage = 1;
+let trashPage = 1;
 
 $(document).ready(async function(){
 
@@ -9,11 +16,15 @@ $(document).ready(async function(){
     DashboardCount();
     loadCustomers();
     loadTableDetails();
+    loadReservations();
 
     $("#SaveTableDetails").click(saveTable);
+    $("#logoutBtn").click(logout);
 
     
 });
+
+
 
 //Check admin login
 function checkAdmin(){
@@ -50,6 +61,10 @@ async function DashboardCount() {
         const tables = await tableResponse.json();
         document.getElementById("tableCount").textContent =tables.length;
 
+        const reservationResponse = await fetch(API.bookingDetails);
+        const reservations=await reservationResponse.json();
+        document.getElementById("ReserveCount").textContent= reservations.length;
+
     }catch(error){
         console.error(error);
     }
@@ -60,10 +75,23 @@ async function loadCustomers(){
     try{
         const response=await fetch(API.customers);
         allCustomers=await response.json();
-        DisplayCustomers(allCustomers);
+        showCustomerPage(1);
     }catch(error){
         console.error("Customer details load error ");
     }
+}
+
+//for cutomer page
+function showCustomerPage(page){
+    customerPage = page;
+    const data = paginate(allCustomers,page);
+    DisplayCustomers(data);
+    createPagination(
+        allCustomers,
+        page,
+        "customerPagination",
+        "showCustomerPage"
+    );
 }
 
 //Display cutomer details in table
@@ -130,7 +158,6 @@ async function saveTable() {
                 icon:"success",
                 title:"Table added"
             });
-
             loadTableDetails();
 
             bootstrap.Modal.getInstance(
@@ -286,4 +313,234 @@ function editTable(tableId){
     new bootstrap.Modal(document.getElementById("AddTableModal")).show();
 }
 
+//loadReservations 
+async function loadReservations(){
+    try{
+        const bookingResponse = await fetch(API.bookingDetails);
+        const bookings = await bookingResponse.json();
 
+        const customerResponse = await fetch(API.customers);
+        const customers = await customerResponse.json();
+
+        allReservations = bookings.map(booking=>{
+            const customer = customers.find(
+                c=>c.id===booking.customerId
+            );
+
+            return{...booking,
+                customerName: customer ?
+                    customer.name :
+                    "Unknown",
+                customerPhone: customer ?
+                    customer.phone :
+                    ""
+            };
+        });
+        displayReservations(allReservations);
+    }
+
+    catch(error){
+        console.log(error);
+    }
+}
+
+//Display Reservations
+function displayReservations(bookings){
+    const tbody = $("#ReservationTableBody");
+    tbody.empty();
+    bookings.forEach(booking=>{
+        let badge = "";
+        if(booking.bookingStatus==="Booked"){
+            badge =
+            `<span class="badge bg-success">
+                Booked
+            </span>`;
+        }
+        else if(booking.bookingStatus==="Cancelled"){
+            badge =
+            `<span class="badge bg-danger">
+                Cancelled
+            </span>`;
+        }
+        else{
+            badge =
+            `<span class="badge bg-secondary">
+                Completed
+            </span>`;
+        }
+        tbody.append(`
+
+            <tr>
+                <td>${booking.customerName}</td>
+                <td>${booking.customerPhone}</td>
+                <td>${booking.tableId}</td>
+                <td>${booking.bookingDate}</td>
+                <td>${booking.session}</td>
+                <td>${booking.slot}</td>
+                <td>${booking.guestCount}</td>
+                <td>${badge}</td>
+            </tr>
+        `);
+    });
+
+}
+
+
+//pagination function
+function paginate(data, currentPage) {
+    const start = (currentPage - 1) * rows_per_page;
+    const end = start + rows_per_page;
+    return data.slice(start, end);
+}
+
+//common pagination button
+function createPagination(data, currentPage, containerId, callback) {
+    const totalPages = Math.ceil(data.length / rows_per_page);
+    const container = document.getElementById(containerId);
+    container.innerHTML = "";
+    if(totalPages <= 1) return;
+
+    // Previous
+    container.innerHTML += `
+        <button
+            class="btn btn-outline-primary btn-sm mx-1"
+            ${currentPage==1?"disabled":""}
+            onclick="${callback}(${currentPage-1})">
+            Previous
+        </button>
+    `;
+
+    for(let i=1;i<=totalPages;i++){
+        container.innerHTML += `
+            <button
+                class="btn ${i==currentPage?'btn-primary':'btn-outline-primary'} btn-sm mx-1"
+                onclick="${callback}(${i})">
+                ${i}
+            </button>
+        `;
+    }
+    container.innerHTML += `
+        <button
+            class="btn btn-outline-primary btn-sm mx-1"
+            ${currentPage==totalPages?"disabled":""}
+            onclick="${callback}(${currentPage+1})">
+            Next
+        </button>
+    `;
+}
+
+//searching and sorting functionality
+function filterReservations() {
+
+    let data = [...allReservations];
+
+    // Search
+    const keyword = $("#bookingSearch").val().toLowerCase();
+
+    if(keyword){
+        data = data.filter(r =>
+            r.customerName.toLowerCase().includes(keyword) ||
+            r.customerPhone.includes(keyword) ||
+            r.tableId.toLowerCase().includes(keyword)
+        );
+    }
+
+    // Status Filter
+    const status = $("#bookingStatusFilter").val();
+
+    if(status){
+        data = data.filter(r => r.bookingStatus === status);
+    }
+
+    // Session Filter
+    const session = $("#sessionFilter").val();
+
+    if(session){
+        data = data.filter(r => r.session === session);
+    }
+
+    // Date Filter
+    const date = $("#bookingDateFilter").val();
+
+    if(date){
+        data = data.filter(r => r.bookingDate === date);
+    }
+
+    // Sorting
+    switch($("#bookingSort").val()){
+
+        case "customerAZ":
+            data.sort((a,b)=>a.customerName.localeCompare(b.customerName));
+            break;
+
+        case "customerZA":
+            data.sort((a,b)=>b.customerName.localeCompare(a.customerName));
+            break;
+
+        case "guestLow":
+            data.sort((a,b)=>a.guestCount-b.guestCount);
+            break;
+
+        case "guestHigh":
+            data.sort((a,b)=>b.guestCount-a.guestCount);
+            break;
+
+        case "newest":
+            data.sort((a,b)=>new Date(b.bookedAt)-new Date(a.bookedAt));
+            break;
+
+        case "oldest":
+            data.sort((a,b)=>new Date(a.bookedAt)-new Date(b.bookedAt));
+            break;
+    }
+
+    showReservationPage(1, data);
+}
+
+function showReservationPage(page, data = allReservations){
+
+    reservationPage = page;
+
+    const pageData = paginate(data, page);
+
+    displayReservations(pageData);
+
+    createPagination(
+        data,
+        page,
+        "ReservationPagination",
+        "showReservationPage"
+    );
+}
+
+
+//logout 
+async function logout() {
+
+    const result = await Swal.fire({
+        title: "Logout?",
+        text: "Are you sure you want to logout?",
+        icon: "question",
+        showCancelButton: true,
+        confirmButtonText: "Yes, Logout",
+        cancelButtonText: "Cancel"
+    });
+
+    if (!result.isConfirmed) {
+        return;
+    }
+
+    // Remove login information
+    localStorage.removeItem("userRole");
+    localStorage.removeItem("loggedInUser");
+    localStorage.removeItem("userId");
+
+    Swal.fire({
+        icon: "success",
+        title: "Logged out successfully",
+        timer: 1200,
+        showConfirmButton: false
+    }).then(() => {
+        window.location.href = "../pages/index.html"; 
+    });
+}

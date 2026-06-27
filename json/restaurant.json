@@ -33,6 +33,24 @@
       "password": "Danusree@123",
       "address": "Town hall,Ukkadam\nCoimbatore",
       "id": "O6tAh2XxIPc"
+    },
+    {
+      "name": "Sindhuja",
+      "dob": "2006-06-17",
+      "email": "sindhu@gmail.com",
+      "phone": "9087657890",
+      "password": "Sindhuja@123",
+      "address": "Mettupalayam,\nCoimbatore",
+      "id": "YYaeyfc_IE0"
+    },
+    {
+      "name": "Keerthi",
+      "dob": "2028-10-24",
+      "email": "kauuu@nn.mm",
+      "phone": "8898898989",
+      "password": "Seeli@123",
+      "address": "lolopolkjbkjbjbjbn",
+      "id": "A7ypb3-nMKs"
     }
   ],
   "tables": [
@@ -61,7 +79,8 @@
       "capacity": "6",
       "tableType": "family",
       "diningArea": "Indoor",
-      "price": "200",
+      "price": "1000",
+      "status": "Available",
       "id": "H3T4MVwFAC8"
     },
     {
@@ -69,10 +88,10 @@
       "tableNo": "1",
       "capacity": "6",
       "tableType": "family",
-      "diningArea": "Indoor",
-      "price": "200",
-      "id": "Q1qyeP6S0hI",
-      "deleted": false
+      "diningArea": "Outdoor",
+      "price": "1000",
+      "status": "Not Available",
+      "id": "Q1qyeP6S0hI"
     },
     {
       "tableId": "V101",
@@ -86,10 +105,91 @@
     }
   ],
   "bookingDetails": [
-
+    {
+      "customerId": "NKMASqbfNBw",
+      "customerName": "Devasree",
+      "tableId": "F101",
+      "bookingDate": "2026-06-27",
+      "session": "Breakfast",
+      "slot": "8:00 AM - 9:00 AM",
+      "guestCount": "5",
+      "bookingStatus": "Booked",
+      "bookedAt": "2026-06-27T10:35:59.606Z",
+      "id": "uu7FI4OCNvU"
+    },
+    {
+      "customerId": "NKMASqbfNBw",
+      "customerName": "Devasree",
+      "tableId": "F101",
+      "bookingDate": "2026-06-27",
+      "session": "Lunch",
+      "slot": "1:00 PM - 2:00 PM",
+      "guestCount": "6",
+      "bookingStatus": "Booked",
+      "bookedAt": "2026-06-27T10:40:31.272Z",
+      "id": "-viEgrfffpA"
+    },
+    {
+      "customerId": "NKMASqbfNBw",
+      "customerName": "Devasree",
+      "tableId": "V101",
+      "bookingDate": "2026-06-27",
+      "session": "Breakfast",
+      "slot": "8:00 AM - 9:00 AM",
+      "guestCount": "6",
+      "bookingStatus": "Cancelled",
+      "bookedAt": "2026-06-27T10:40:59.966Z",
+      "id": "AZUfdKf6l2E",
+      "cancelledAt": "2026-06-27T10:46:27.144Z"
+    },
+    {
+      "customerId": "NKMASqbfNBw",
+      "customerName": "Devasree",
+      "tableId": "V101",
+      "bookingDate": "2026-06-27",
+      "session": "Dinner",
+      "slot": "8:00 PM - 9:00 PM",
+      "guestCount": "5",
+      "bookingStatus": "Booked",
+      "bookedAt": "2026-06-27T11:07:36.262Z",
+      "id": "RDjeZ7FF_mU"
+    },
+    {
+      "customerId": "O6tAh2XxIPc",
+      "customerName": "Danusree",
+      "tableId": "V101",
+      "bookingDate": "2026-06-27",
+      "session": "Dinner",
+      "slot": "7:00 PM - 8:00 PM",
+      "guestCount": "5",
+      "bookingStatus": "Booked",
+      "bookedAt": "2026-06-27T11:28:42.173Z",
+      "id": "rms2xj3WYKU"
+    },
+    {
+      "customerId": "O6tAh2XxIPc",
+      "customerName": "Danusree",
+      "tableId": "V101",
+      "bookingDate": "2026-06-27",
+      "session": "Dinner",
+      "slot": "9:00 PM - 10:00 PM",
+      "guestCount": "6",
+      "bookingStatus": "Booked",
+      "bookedAt": "2026-06-27T11:28:57.437Z",
+      "id": "bH616xLVFCI"
+    },
+    {
+      "customerId": "1",
+      "tableId": "C101",
+      "bookingDate": "2026-06-27",
+      "session": "Breakfast",
+      "slot": "8:00 AM - 9:00 AM",
+      "guestCount": "2",
+      "bookingStatus": "Booked",
+      "bookedAt": "2026-06-27T11:53:47.492Z",
+      "id": "jSTjLt8NKlY"
+    }
   ],
-  "slots":[
-
-  ],
+  "slots": [],
   "$schema": "./node_modules/json-server/schema.json"
 }

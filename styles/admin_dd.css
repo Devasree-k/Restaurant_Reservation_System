@@ -9,3 +9,7 @@
     background: linear-gradient(to bottom, #b95135, #f3b258 );
     height: 100vh;
 }
+
+.custom-color{
+    background: #f3b258;
+}

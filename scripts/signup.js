@@ -1,11 +1,13 @@
 $(document).ready(function(){
+    const today=new Date().toISOString().split("T")[0];
+    $("#dob").attr("max",today);
+
     const API="http://localhost:3000/customers";
     $("#Signup").submit(async function(e){
         e.preventDefault();
         let isValid=true;
 
-        const today=new Date().toISOString().split("T")[0];
-        $("#dob").attr("min",today);
+        
 
         $(".form-control").removeClass("is-valid is-invalid");
 
@@ -113,8 +115,12 @@ $(document).ready(function(){
                 });
 
                 window.location.href="../pages/index.html";
-                alert("Registration successfull");
+                // alert("Registration successfull");
 
+                Swal.fire({
+        icon:"success",
+        title:"Registration Successful"
+    });
                 
         }catch(error){
             console.log(error);
