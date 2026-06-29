@@ -3,20 +3,14 @@ body{
     background: rgb(252, 239, 223);
 }
 
-/* *{
-    background: rgb(252, 239, 223);
-} */
  
 .custom-bg{
-    /* background: linear-gradient(to right, #0066ff, #66ffff); */
     background: linear-gradient(to right, #b95135, #f3b258 );
 }
 
 /* dark mode */
-
-
 body.dark-mode{
-    background:#121212;
+    background:#584129;
     color:#f5f5f5;
 }
 

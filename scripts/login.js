@@ -1,7 +1,18 @@
 $(document).ready(function(){
 
     const API="http://localhost:3000";
+    // Load saved email
+    const savedEmail = localStorage.getItem("loginEmail");
+    if(savedEmail){
+        $("#email").val(savedEmail);
+    }
 
+    // Save email while typing
+    $("#email").on("input", function(){
+        localStorage.setItem("loginEmail", $(this).val().trim());
+    });
+
+    //on submit
     $("#login").submit(async function(e){
         e.preventDefault();
 
@@ -60,14 +71,12 @@ $(document).ready(function(){
             if (customerData.length > 0) {
                 localStorage.setItem("userRole", "customer");
                 localStorage.setItem("user", JSON.stringify(customerData[0]));
-
                 await Swal.fire({
                     icon:"success",
                     title:"Customer Login Successful",
                     timer:1500,
                     showConfirmButton: false
                 });
-
                 window.location.href = "../pages/customer_dashboard.html";
                 return
             }

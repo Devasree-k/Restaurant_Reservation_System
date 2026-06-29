@@ -6,7 +6,7 @@
     <title>Admin</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.min.css">
-    <link rel="stylesheet" href="../styles/admin_dd.css">
+    <link rel="stylesheet" href="../styles/admin_dashboard.css">
 </head>
 <body>
     <!-- navbar -->
@@ -26,9 +26,9 @@
                             <div id="userEmail" class="small ps-1"> admin@gmail.com</div>
                         </div>
                     </li>
-                    <!-- <li class="nav-item">
-                        <button class="btn-light custom-btn m-2" id="themeToggle"><i class="bi bi-moon-stars-fill"></i></button>
-                    </li> -->
+                    <li class="nav-item">
+                        <button class="btn-light custom-btn m-2 rounded-5 border-0 fs-5" id="themeToggle"><i class="bi bi-moon-stars-fill"></i></button>
+                    </li>
                     <li class="nav-item">
                         <button id="logoutBtn" class="btn btn-outline-light ms-2">
                             <i class="bi bi-box-arrow-right"></i> Logout
@@ -40,8 +40,9 @@
         </div>
     </navbar>
 
+    
     <div class="container-fluid">
-
+<!-- Side bar -->
         <div class="row">
             <div class="col-md-2 sidebar ">
                 <ul class="list-group rounded-0 ">
@@ -84,61 +85,58 @@
                 </ul>
             </div>
 
+            <!--Counter cards -->
             <div class="col-md-10">
 
                 <section id="dashboard" class="mt-5">
                     <h4>Dashboard</h4>
                     <div class="row ">
-                        <div class="col-md-3">
+                        <div class="col-md-4">
                             <div class="card custom-bg">
                                 <div class="card-body text-center">
+                                    <a href="#tables" class="text-decoration-none  text-dark fw-bold">
                                     <h5>Tables </h5>
                                     <h3 id="tableCount"> 0</h3>
+                                    </a>
                                 </div>
                             </div>
                         </div>
 
-                        <div class="col-md-3">
+                        <div class="col-md-4">
                             <div class="card custom-bg">
                                 <div class="card-body text-center">
+                                    <a href="#customers" class="text-decoration-none text-dark fw-bold">
                                     <h5>Customers </h5>
                                     <h3 id="CustomerCount"> 0</h3>
+                                    </a>
                                 </div>
                             </div>
                         </div>
 
-                        <div class="col-md-3">
+                        <div class="col-md-4">
                             <div class="card custom-bg">
                                 <div class="card-body text-center">
-                                    <h5>Reservations </h5>
+                                    <a href="#bookings" class="text-decoration-none  text-dark fw-bold">
+                                    <h5>Reservation Count </h5>
                                     <h3 id="ReserveCount"> 0</h3>
+                                    </a>
                                 </div>
                             </div>
                         </div>
 
-                        <div class="col-md-3">
-                            <div class="card custom-bg">
-                                <div class="card-body text-center">
-                                    <h5>Available Tables </h5>
-                                    <h3 id="AvailableCount"> 0</h3>
-                                </div>
-                            </div>
-                        </div>
+                        
                     </div>
                 </section>
 
 
+                <!-- Reservation management section -->
                 <section id="bookings" class="mt-5">
                     <div class="d-flex justify-content-between align-items-center mb-3">
                         <h3>Reservation Management</h3>
                             <div class="row mb-3">
 
                                 <div class="col-md-3">
-                                    <input
-                                        type="text"
-                                        id="bookingSearch"
-                                        class="form-control"
-                                        placeholder="Search Reservation">
+                                    <input type="text" id="bookingSearch" class="form-control" placeholder="Search Reservation">
                                 </div>
 
                                 <div class="col-md-2">
@@ -160,10 +158,7 @@
                                 </div>
 
                                 <div class="col-md-2">
-                                    <input
-                                        type="date"
-                                        id="bookingDateFilter"
-                                        class="form-control">
+                                    <input type="date" id="bookingDateFilter" class="form-control">
                                 </div>
 
                                 <div class="col-md-3">
@@ -181,9 +176,9 @@
                             </div>
                     </div>
 
-                    <div class="table-responsive">
-                        <table class="table table-bordered table-hover table-striped">
-                            <thead class="table-success">
+                    <div class="table-responsive d-flex justify-content-center">
+                        <table class="table table-bordered table-hover table-striped w-75">
+                            <thead class="table-warning">
                                 <tr>
                                     <th>Customer</th>
                                     <th>Phone</th>
@@ -209,14 +204,15 @@
                 </section>
 
 
+                <!-- Customer Management section-->
                 <section id="customers" class="mt-5">
                     <div class="d-flex justify-content-between align-items-center mb-3">
                         <h3>Customer Management</h3>
-                        <input type="text" id="studentSearch" class="form-control w-25" placeholder="Search Customer .." >
+                        <input type="text" id="customerSearch" class="form-control w-25" placeholder="Search Customer .." >
                     </div>
 
-                    <div class="table-responsive">
-                        <table class="table table-bordered table-hover table-striped">
+                    <div class="table-responsive d-flex justify-content-center">
+                        <table class="table table-bordered table-hover table-striped w-75">
                             <thead class="table-primary">
                                 <tr>
                                     <th>Name</th>
@@ -239,6 +235,7 @@
                     </div>
                 </section>
 
+                <!--Table management with CRUD -->
                 <section id="tables" class="mt-5">
                     <div class="d-flex justify-content-between align-items-center mb-3">
                         <h3>Tables Management</h3>
@@ -259,10 +256,10 @@
                                             <input type="text" id="tableId" class="form-control" placeholder="Table ID" required>
                                         </div>
 
-                                        <div class="mb-3">
+                                        <!-- <div class="mb-3">
                                             <label class="form-label">Table No.</label>
                                             <input type="number" id="tableNo" class="form-control" placeholder="Table No" required>
-                                        </div>
+                                        </div> -->
 
                                         <div class="mb-3">
                                             <label class="form-label">Capacity</label>
@@ -283,10 +280,10 @@
                                             <label>Table Type</label>
                                             <select class="form-control" id="tableType">
                                                 <option value="TableType">select Table</option>
-                                                <option value="family">Family Dining</option>
+                                                <option value="Family">Family Dining</option>
                                                 <option value="Couple">Couple Dining</option>
-                                                <option value="vip">VIP Dining</option>
-                                                <option value="private">Private Dining</option>
+                                                <option value="Vip">VIP Dining</option>
+                                                <option value="Private">Private Dining</option>
                                             </select>
                                         </div>
 
@@ -311,12 +308,12 @@
                         </div>
                     </div>
 
-                    <div class="table-responsive">
-                        <table class=" table table-bordered table-hover table-striped">
+                    <div class="table-responsive text-center d-flex justify-content-center ">
+                        <table class=" table table-bordered table-hover table-striped w-75">
                             <thead class="table-warning">
                                 <tr>
                                     <th> TableID </th>
-                                    <th> TableNo </th>
+                                    <!-- <th> TableNo </th> -->
                                     <th> Capacity </th>
                                     <th> Table Type </th>
                                     <th> Dining area </th>
@@ -330,35 +327,35 @@
                             </tbody>
                         </table>
 
-                        <div
-                            id="TablesPagination"
-                            class="d-flex justify-content-center mt-3">
-                        </div>
+                    </div>
+                    <div id="TablesPagination" class="d-flex justify-content-center mt-3">
                     </div>
                 </section>
 
 
+                <!--Trash section ( temporary deleted item)-->
                 <section id="trash" class="mt-5 d-none">
                     <h3>Trash</h3>
 
-                    <table class="table table-bordered table-hover table-striped ">
-                        <thead class="table-danger custom-color">
-                            <tr>
-                                <th>Table ID</th>
-                                <th>Table No</th>
-                                <th>Capacity</th>
-                                <th>Type</th>
-                                <th>Dining</th>
-                                <th>Price</th>
-                                <th>Restore</th>
-                            </tr>
-                        </thead>
+                    <div class="table-responsive text-center d-flex justify-content-center ">
+                        <table class="table table-bordered table-hover table-striped w-75">
+                            <thead class="table-danger custom-color">
+                                <tr>
+                                    <th>Table ID</th>
+                                    <th>Capacity</th>
+                                    <th>Type</th>
+                                    <th>Dining</th>
+                                    <th>Price</th>
+                                    <th>Restore</th>
+                                </tr>
+                            </thead>
 
-                        <tbody id="TrashTableBody">
+                            <tbody id="TrashTableBody">
 
-                        </tbody>
+                            </tbody>
 
-                    </table>
+                        </table>
+                    </div>
                 </section>
 
             </div>
@@ -366,9 +363,6 @@
     </div>
 
 
-    
-    <!-- <h1> Admin dashboard</h1> -->
-    
     <script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js" integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.26.25/dist/sweetalert2.all.min.js"></script>

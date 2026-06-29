@@ -28,12 +28,14 @@
                         <li class="nav-item"  >
                             <a class="nav-link text-light" href="#features"> Features </a>
                         </li>
-                        <li class="nav-item ms-2">
-                            <a href="../pages/login.html" class="btn btn-outline-light btn-sm  fw-bold ">Login</a>
+                        <li class="nav-item">
+                            <button class="btn-light custom-btn m-2 rounded-5 border-0" id="themeToggle" > <i class="bi bi-moon-stars-fill"></i></button>
                         </li>
-
                         <li class="nav-item ms-2">
-                            <a href="../pages/signup.html" class="btn btn-outline-dark btn-sm  fw-bold text-light">Sign Up</a>
+                            <a href="../pages/login.html" class="btn btn-outline-light btn-sm fw-bold p-2">Login</a>
+                        </li>
+                        <li class="nav-item ms-2">
+                            <a href="../pages/signup.html" class="btn btn-outline-light btn-sm fw-bold p-2">Sign Up</a>
                         </li>
                     </ul>
                 </div>
@@ -41,18 +43,19 @@
         </div>
     </navbar>
 
-    <section id="Home" class="animate-bg py-5">
+    <!--Home page with image -->
+    <section id="Home" class="animate-bg py-3">
         <div class="container ">
             
-            <div class="row align-item-center my-5">
+            <div class="row align-items-center my-3">
                 <div class="col-lg-6 my-5 rounded custom-opacity">
                     <h1 class="my-5 fw-bold"> BOOK YOUR TABLE PRIOR & ENJOY THE FOOD  </h1>
-                    <p class="my-5 text-muted fs-5" style="font-family:monospace;">Explore and enjoy the food in restaurant with your choice of booking the table as your wish.
-                        The food here is of exceptional quality and our customer service is one of the premium in the city .
+                    <p class="my-5 text-muted fs-5" style="font-family:monospace;">Book your table, savor the flavor. Exceptional food and premier service await.
+                        Reserve your table today for an exceptional dining experience and premium hospitality.
                     </p>
 
-                    <a type="button" href="../pages/signup.html" class="btn custom-bg  mb-5 fw-bold fs-5 me-2" style="border-radius: 20px;"> Signup </a>
-                    <a type="button" href="../pages/login.html" class="btn custom-bg mb-5 fw-bold fs-5" style="border-radius: 20px;" > Login </a>
+                    <a type="button" href="../pages/signup.html" class="btn custom-btn-bg  mb-5 fw-bold fs-5 me-2" style="border-radius: 20px;"> Signup </a>
+                    <a type="button" href="../pages/login.html" class="btn custom-btn-bg mb-5 fw-bold fs-5" style="border-radius: 20px;" > Login </a>
 
                 </div>
                 <div class="col-lg-6 mt-5">
@@ -60,15 +63,14 @@
                 </div>
             </div>
 
-           
-
         </div>
     </section>
 
+    <!-- About sectio with image and para -->
     <section id="About" class="py-5">
         <div class="container ">
             <h3 class="mt-5 text-center"> About US </h3>
-            <div class="row align-item-center">
+            <div class="row align-items-center">
                 <div class="col-lg-6 my-5 text-center">
                     <img src="../assets/images/about_img1.webp" class="img-fluid" style="border-radius: 30px;">
                 </div>
@@ -80,21 +82,19 @@
                         Whether you're here for a quick lunch or a long, laughter-filled dinner, we welcome you like family.</p>
 
                 </div>
-                
             </div>
-
         </div>
     </section>
    
+
+    <!--Feature cards-->
     <section id="features" class="animate-bg py-5">
         <h3 class="text-center"> Features </h3>
         <div class="container my-5" >
             <div class="row g-4">
                 <div class="col-md-4 col-sm-6">
                     <div class="card shadow">
-                        <!-- <div class="card-img align-items-center"> -->
-                            <img src="../assets/images/index_img2.webp" class="card-img-top "  alt="service">
-                        <!-- </div> -->
+                        <img src="../assets/images/index_img2.webp" class="card-img-top "  alt="service">
                         <div class="card-body">
                             <h5>Outstanding Customer Service </h5>
                         </div>
@@ -103,9 +103,7 @@
 
                 <div class="col-md-4 col-sm-6">
                     <div class="card shadow">
-                        <!-- <div class="card-img align-items-center"> -->
-                            <img src="../assets/images/food_img1.jpg " class="card-img-top" alt="fod quality" >
-                        <!-- </div> -->
+                        <img src="../assets/images/food_img1.jpg " class="card-img-top" alt="fod quality" >
                         <div class="card-body">
                             <h5>Exceptional Food Quality </h5>
                         </div>
@@ -114,9 +112,7 @@
 
                 <div class="col-md-4 col-sm-6">
                     <div class="card shadow">
-                        <!-- <div class="card-img align-item-center"> -->
-                            <img src="../assets/images/index_img3.webp " class="card-img-top" alt="ambiance">
-                        <!-- </div> -->
+                        <img src="../assets/images/index_img3.webp " class="card-img-top" alt="ambiance">
                         <div class="card-body">
                             <h5>Interior Design and Ambiance </h5>
                         </div>

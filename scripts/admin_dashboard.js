@@ -12,7 +12,6 @@ let reservationPage = 1;
 let trashPage = 1;
 
 $(document).ready(async function(){
-
     checkAdmin();
     initializeSidebar();
     DashboardCount();
@@ -24,16 +23,17 @@ $(document).ready(async function(){
     $("#SaveTableDetails").click(saveTable);
     $("#logoutBtn").click(logout);
 
-    $("#customerSearch").on("keyup", filterCustomers );
+    $("#customerSearch").on("keyup",
+        filterCustomers );
+
     $("#bookingSearch").on("keyup", filterReservations);
     $("#bookingStatusFilter").on("change", filterReservations);
     $("#sessionFilter").on("change", filterReservations);
     $("#bookingDateFilter").on("change", filterReservations);
     $("#bookingSort").on("change", filterReservations);
+
     
 });
-
-
 
 //Check admin login
 function checkAdmin(){
@@ -54,7 +54,16 @@ function initializeSidebar(){
             item.classList.add("active");
             sections.forEach(section=>section .classList.add("d-none"));
             const sectionName=item.dataset.section;
-            document.getElementById(`${sectionName}`).classList.remove("d-none");
+            if(sectionName === "dashboard"){
+                // Dashboard view
+                document.getElementById("dashboard").classList.remove("d-none");
+                document.getElementById("bookings").classList.remove("d-none");
+                document.getElementById("tables").classList.remove("d-none");
+            }
+            else{
+                // Show only selected section
+                document.getElementById(sectionName).classList.remove("d-none");
+            }
         });
     })
 }
@@ -94,7 +103,7 @@ async function loadCustomers(){
 //for cutomer page
 function showCustomerPage(page){
     customerPage = page;
-    const data = paginate(allCustomers,page);
+    const data = paginate(filteredCustomers,page);
     DisplayCustomers(data);
     createPagination(
         filteredCustomers,
@@ -104,10 +113,17 @@ function showCustomerPage(page){
     );
 }
 
+//format date to dd-mm-yyyy format 
+
+function formatDate(date) {
+    return date.split("-").reverse().join("-");
+}
+
 //Display cutomer details in table
 function DisplayCustomers(customers){
     const customersTable=document.getElementById("customerTableBody");
-    
+   
+
     customersTable.innerHTML= "";
     customers.forEach(customer=>{
         customersTable.innerHTML+=`
@@ -115,7 +131,7 @@ function DisplayCustomers(customers){
         <td>${customer.name}</td>
         <td>${customer.phone}</td>
         <td>${customer.email}</td>
-        <td>${customer.dob}</td>
+        <td>${formatDate(customer.dob)}</td>
         <td>${customer.address}</td>
         </tr>
         `;
@@ -139,7 +155,7 @@ async function saveTable() {
 
     const tableData={
         tableId: document.getElementById("tableId").value,
-        tableNo: document.getElementById("tableNo").value,
+        // tableNo: document.getElementById("tableNo").value,
         capacity: document.getElementById("capacity").value,
         tableType: document.getElementById("tableType").value,
         diningArea: document.getElementById("diningArea").value,
@@ -229,18 +245,18 @@ function displayTables(tables) {
         tbody.innerHTML += `
             <tr>
                 <td>${table.tableId}</td>
-                <td>${table.tableNo}</td>
+                <!--<td>${table.tableNo}</td>-->
                 <td>${table.capacity}</td>
                 <td>${table.tableType}</td>
                 <td>${table.diningArea}</td>
                 <td>₹${table.price}</td>
                 <!--<td>${table.status}</td>-->
                 <td>
-                    <button class="btn btn-warning btn-sm"  onclick="editTable('${table.tableId}')">
-                        Edit
+                    <button class="btn btn-warning btn-sm rounded-5 me-1"  onclick="editTable('${table.tableId}')">
+                        <i class="bi bi-pencil-square"></i>
                     </button>
-                    <button class="btn btn-danger btn-sm" onclick="deleteTable('${table.tableId}')">
-                        Delete
+                    <button class="btn btn-danger btn-sm rounded-5" onclick="deleteTable('${table.tableId}')">
+                        <i class="bi bi-trash-fill"></i>
                     </button>
                 </td>
             </tr>
@@ -301,7 +317,7 @@ function displayTrash(tables){
         tbody.innerHTML+=`
         <tr>
         <td>${table.tableId}</td>
-        <td>${table.tableNo}</td>
+        <!--<td>${table.tableNo}</td>-->
         <td>${table.capacity}</td>
         <td>${table.tableType}</td>
         <td>${table.diningArea}</td>
@@ -334,7 +350,7 @@ function editTable(tableId){
     editingId=table.id;
     if(!table) return;
     document.getElementById("tableId").value = table.tableId;
-    document.getElementById("tableNo").value = table.tableNo;
+    // document.getElementById("tableNo").value = table.tableNo;
     document.getElementById("capacity").value = table.capacity;
     document.getElementById("tableType").value = table.tableType;
     document.getElementById("diningArea").value = table.diningArea;
@@ -373,6 +389,7 @@ async function loadReservations(){
             };
         });
         // displayReservations(allReservations);
+        allReservations.sort((a,b)=>new Date(b.bookedAt)-new Date(a.bookedAt));
         filteredReservations=[...allReservations];
         showReservationPage(1);
     }
@@ -412,7 +429,7 @@ function displayReservations(bookings){
                 <td>${booking.customerName}</td>
                 <td>${booking.customerPhone}</td>
                 <td>${booking.tableId}</td>
-                <td>${booking.bookingDate}</td>
+                <td>${formatDate(booking.bookingDate)}</td>
                 <td>${booking.session}</td>
                 <td>${booking.slot}</td>
                 <td>${booking.guestCount}</td>
@@ -422,7 +439,6 @@ function displayReservations(bookings){
     });
 
 }
-
 
 //pagination function
 function paginate(data, currentPage) {
@@ -470,10 +486,8 @@ function createPagination(data, currentPage, containerId, callback) {
 //searching and sorting functionality
 function filterReservations() {
     let data = [...allReservations];
-
     // Search
     const keyword = $("#bookingSearch").val().toLowerCase();
-
     if(keyword){
         data = data.filter(r =>
             r.customerName.toLowerCase().includes(keyword) ||
@@ -495,7 +509,7 @@ function filterReservations() {
     }
 
     // Date Filter
-    const date = $("#bookingDateFilter").val();
+    const date = $("#bookingDateFilter").val()
     if(date){
         data = data.filter(r => r.bookingDate === date);
     }
@@ -505,23 +519,18 @@ function filterReservations() {
         case "customerAZ":
             data.sort((a,b)=>a.customerName.localeCompare(b.customerName));
             break;
-
         case "customerZA":
             data.sort((a,b)=>b.customerName.localeCompare(a.customerName));
             break;
-
         case "guestLow":
             data.sort((a,b)=>a.guestCount-b.guestCount);
             break;
-
         case "guestHigh":
             data.sort((a,b)=>b.guestCount-a.guestCount);
             break;
-
         case "newest":
             data.sort((a,b)=>new Date(b.bookedAt)-new Date(a.bookedAt));
             break;
-
         case "oldest":
             data.sort((a,b)=>new Date(a.bookedAt)-new Date(b.bookedAt));
             break;
@@ -531,14 +540,10 @@ function filterReservations() {
     showReservationPage(1);
 }
 
-function showReservationPage(page, data = allReservations){
-
+function showReservationPage(page){
     reservationPage = page;
-
-    const pageData = paginate(data, page);
-
+    const pageData = paginate(filteredReservations, page);
     displayReservations(pageData);
-
     createPagination(
         filteredReservations,
         page,
@@ -579,6 +584,8 @@ async function logout() {
     });
 }
 
+
+//After booked time end auto change status to completed
 async function updateCompletedBookings(){
     const response=await fetch(API.bookingDetails);
     const bookings=await response.json();

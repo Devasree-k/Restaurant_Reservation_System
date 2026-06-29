@@ -8,7 +8,6 @@ body{
 }
 
 .custom-bg{
-    /* background: linear-gradient(to right, #0066ff, #66ffff); */
     background: linear-gradient(to right, #f3b258, #f8deba );
 }
 
@@ -29,22 +28,37 @@ body{
     left:20px;
     color: white;
 }
+ 
+.card{
+    transition:
+        transform .35s ease,
+        box-shadow .35s ease,
+        border-color .35s ease;
+}
+
+.card:hover{
+    transform:translateY(-8px) scale(1.02);
+    box-shadow:0 20px 40px rgba(0,0,0,.18);
+    border:1px solid #f3b258;
+}
+
+.profile-card-bg{
+    background: #f3b258;
+}
 
 /* dark mode */
 
 body.dark-mode{
-    background:#2b211d;
+    background:#584129;
     color:#f5ede3;
 }
 
 /* Navbar */
-
 body.dark-mode .nav-bg{
     background:linear-gradient(to right,#4b2e26,#8a5b34);
 }
 
 /* Cards */
-
 body.dark-mode .card{
     background:#3a2d28;
     color:#f8f3ec;
@@ -56,7 +70,6 @@ body.dark-mode .custom-bg{
 }
 
 /* Carousel */
-
 body.dark-mode .carousel-inner{
     border-radius:15px;
 }
@@ -67,13 +80,11 @@ body.dark-mode .hero-text{
 }
 
 /* Search Card */
-
 body.dark-mode #searchCard .card{
     background:#45352f;
 }
 
 /* Inputs */
-
 body.dark-mode .form-control,
 body.dark-mode .form-select{
     background:#5a463f;
@@ -94,7 +105,6 @@ body.dark-mode .form-select:focus{
 }
 
 /* Sections */
-
 body.dark-mode h1,
 body.dark-mode h2,
 body.dark-mode h3,
@@ -108,7 +118,6 @@ body.dark-mode span{
 }
 
 /* Available Cards */
-
 body.dark-mode .badge.bg-success{
     background:#2e7d32 !important;
 }
@@ -118,7 +127,6 @@ body.dark-mode .badge.bg-danger{
 }
 
 /* Reservation Cards */
-
 body.dark-mode .border-danger{
     border-color:#ff7b7b !important;
 }
@@ -128,7 +136,6 @@ body.dark-mode .border-success{
 }
 
 /* Modal */
-
 body.dark-mode .modal-content{
     background:#3b2d27;
     color:white;
@@ -140,9 +147,8 @@ body.dark-mode .modal-footer{
 }
 
 /* Offcanvas */
-
 body.dark-mode .offcanvas{
-    background:#352823;
+    background:linear-gradient(to bottom,#9b7a65 ,#372a25);
     color:white;
 }
 
@@ -156,7 +162,6 @@ body.dark-mode .offcanvas .table th{
 }
 
 /* Links */
-
 body.dark-mode a{
     color:#f4d6a0;
 }
@@ -166,7 +171,6 @@ body.dark-mode a:hover{
 }
 
 /* Buttons */
-
 body.dark-mode .btn-outline-light{
     color:white;
     border-color:#ddd;

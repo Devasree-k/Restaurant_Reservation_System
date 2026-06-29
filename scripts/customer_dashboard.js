@@ -25,6 +25,8 @@ const SLOT_DATA = {
 $(document).ready(async function () {
     loadUserDetails();
     loadProfile();
+    showWelcomeMessage();
+
     loadTables();
     await updateCompletedBookings();
     await loadReservedTable();
@@ -59,7 +61,6 @@ async function DashboardCount() {
         const available = avaiTable.filter(t => !t.deleted);
         $("#AvailableCount").text(available.length);
 
-
         const bookingResponse = await fetch(API.bookingDetails);
         const bookings = await bookingResponse.json();
         const myBookings = bookings.filter( booking =>
@@ -67,7 +68,6 @@ async function DashboardCount() {
             booking.bookingStatus === "Booked"
         );
         $("#MyReservationCount").text(myBookings.length);
-
 
         const cancelled = bookings.filter( booking =>
             booking.customerId === currentUser.id &&
@@ -85,17 +85,15 @@ async function loadTables(){
     try{
         let response=await fetch(API.tables);
         let tables=await response.json();
-
         availableTables=tables.filter(t=> !t.deleted );
-
         displayAvailableTables(availableTables);
-
         $("#AvailableCount").text(availableTables.length);
     }catch(error){
         console.log("Error while loading ",error);
     }
 }
 
+//Display only available tables
 function displayAvailableTables(tables){
     const card=document.getElementById("availableContainer");
     card.innerHTML="";
@@ -109,9 +107,9 @@ function displayAvailableTables(tables){
                         <div class="col">
                             <h4 class="card-title"> TableId: ${table.tableId}</h4>
                         </div>
-                        <div class="col">
+                        <!--<div class="col">
                             <p> Table No: ${table.tableNo}</p>
-                        </div>
+                        </div>-->
                     </div>
                     <div class="row">
                         <div class="col">
@@ -144,7 +142,7 @@ function displayAvailableTables(tables){
     });
 }
 
-
+// to book the table by search
 function bookTable(tableId){
     $("#bookDate").attr("min",new Date().toISOString().split("T")[0]);
 
@@ -171,6 +169,8 @@ function bookTable(tableId){
 
 }
 
+
+//Dynamically load slots based on session
 async function loadSlots(){
     
     const response=await fetch(API.bookingDetails);
@@ -209,8 +209,30 @@ async function loadSlots(){
 
 }
 
+//Confirm booking by validating the booked slots 
 async function confirmBooking(){
     const bookingDate=$("#bookDate").val();
+    const today = new Date();
+    today.setHours(0,0,0,0);
+    const selectedDate = new Date(bookingDate);
+    if (isNaN(selectedDate.getTime())) {
+        Swal.fire(
+            "Invalid Date",
+            "Please select a valid booking date.",
+            "error"
+        );
+        return;
+    }
+    if (selectedDate < today) {
+        Swal.fire(
+            "Invalid Date",
+            "Past dates are not allowed.",
+            "error"
+        );
+        return;
+    }
+
+
     const session=$("#mealSession").val();
     const slot=$("#timeSlot").val();
     const guestCount=$("#bookingGuestCount").val();
@@ -233,11 +255,15 @@ async function confirmBooking(){
     }
 
     
-
+//Retrieve the bookingDetails 
     const bookingData = {
         customerId: currentUser.id,
         customerName: currentUser.name,
         tableId: selectedTable.tableId,
+        tableType: selectedTable.tableType,
+        diningArea: selectedTable.diningArea,
+        capacity: selectedTable.capacity,
+        price: selectedTable.price,
         bookingDate: bookingDate,
         session: session,
         slot: slot,
@@ -260,25 +286,24 @@ async function confirmBooking(){
     await loadReservedTable();
     await loadSlots();
     await loadTables();
+    // await searchTables();
     DashboardCount();
 
 }
 
+//To load the reserved Table details
 async function loadReservedTable(){
     try{
         const response=await fetch(API.bookingDetails);
         const availableTable=await response.json();
-
         allReservedTables=availableTable.filter(booking=>booking.customerId===currentUser.id && booking.bookingStatus === "Booked") ;
         displayReservedTables(allReservedTables);
-        
     }catch(error){
         console.error("Loading error",error);
     }
-
 }
 
-
+//To display the reserved tables 
 function displayReservedTables(bookings){
 
     const container = $("#MyReservations");
@@ -303,10 +328,12 @@ function displayReservedTables(bookings){
                         <div class="col">
                             <p>Date : ${booking.bookingDate}</p>
                             <p>Session : ${booking.session}</p>
+                            <p>Dining : ${booking.diningArea}</p>
                         </div>
                         <div class="col">
                             <p>Slot : ${booking.slot}</p>
                             <p>Guests : ${booking.guestCount}</p>
+                            <p>₹ ${booking.price}</p>
                         </div>
                     </div>
                     <span class="badge bg-success">
@@ -415,7 +442,7 @@ function loadSearchSlots(){
         return;
     }
     SLOT_DATA[session].forEach(time=>{
-        slot.append(`<option value=${time}">
+        slot.append(`<option value="${time}">
             ${time}
             </option>
         `);
@@ -495,7 +522,7 @@ function displayCompletedTable(bookings){
 
                     <div class="card-body">
                         <h5>${booking.tableId}</h5>
-                        <p>Date : ${booking.bookingDate}</p
+                        <p>Date : ${booking.bookingDate}</p>
                         <p>Session : ${booking.session}</p>
                         <p>Slot : ${booking.slot}</p>
                         <span class="badge bg-success">
@@ -564,14 +591,63 @@ async function logout(){
 
 //offcanvas
 function loadProfile(){
-
-    if(!currentUser) return;
-
+    if(!currentUser){
+        return;
+    }
     $("#profileId").text(currentUser.id);
-    $("#profileName").text(currentUser.name);
-    $("#profileName2").text(currentUser.name);
-    $("#profileEmail").text(currentUser.email);
-    $("#profileEmail2").text(currentUser.email);
-    $("#profileRole").text(currentUser.role);
+    $("#profileName1").text(currentUser.name);
+    $("#profileEmail1").text(currentUser.email);
+    $("#profilePhone").text(currentUser.phone);
+    $("#profileAddress").text(currentUser.address);
+}
+
+
+//Show Welcome alert with count on reload and login 
+
+function showWelcomeMessage(){
+    if(!currentUser) return;
+    const visitKey = `visitCount_${currentUser.id}`;
+    let visitCount = Number(localStorage.getItem(visitKey)) || 0;
+    visitCount++;
+    localStorage.setItem(visitKey, visitCount);
+    let message = "";
+    if(visitCount === 1){
+        message = `
+            Welcome to FoodHub, <b>${currentUser.name}</b>
+            This is your <b>first visit</b>
+            We hope you enjoy your dining experience.
+        `;
+    }
+    else if(visitCount < 5){
+        message = `
+            Welcome Back, <b>${currentUser.name}</b>
+            This is your <b>${visitCount} visit.</b>
+        `;
+    }
+    else if(visitCount < 10){
+        message = `
+            Great to see you again!
+            <b>${visitCount}</b> times.
+        `;
+    }
+    else{
+        message = `
+            Welcome Back, <b>${currentUser.name}</b>
+            Wow! You've visited us
+            <b>${visitCount}</b> times.<br>
+        `;
+    }
+
+    Swal.fire({
+        title:"Welcome!",
+        html:message,
+        icon:"success",
+        confirmButtonText:"Let's Explore",
+        timer:3500,
+        timerProgressBar:true,
+        showClass:{
+            popup:"animate__animated animate__zoomIn"
+        }
+    });
 
 }

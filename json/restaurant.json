@@ -51,6 +51,78 @@
       "password": "Seeli@123",
       "address": "lolopolkjbkjbjbjbn",
       "id": "A7ypb3-nMKs"
+    },
+    {
+      "name": "Karthikaa",
+      "dob": "2005-01-03",
+      "email": "karthika@gmail.com",
+      "phone": "9478089087",
+      "password": "Karthikaa@123",
+      "address": "Mettupalayam,Coimbatore",
+      "id": "LDlhBE-DVA4"
+    },
+    {
+      "name": "Vikhashini",
+      "dob": "2006-06-07",
+      "email": "vikhashini@gmail.com",
+      "phone": "8907643776",
+      "password": "Vikhashini@123",
+      "address": "Gopichettipalayam, \nErode",
+      "id": "6Q7ikpX9VCk"
+    },
+    {
+      "name": "Aandal",
+      "dob": "2005-07-06",
+      "email": "aandal@gmail.com",
+      "phone": "8989899090",
+      "password": "Aandal@123",
+      "address": "Neelambur,\nCoimbatore",
+      "id": "1NRHJu29h6o"
+    },
+    {
+      "name": "Priya",
+      "dob": "2005-07-06",
+      "email": "priya@gmail.com",
+      "phone": "8989899090",
+      "password": "Priya@123",
+      "address": "Neelambur,\nCoimbatore",
+      "id": "SBD7E-Sua1o"
+    },
+    {
+      "name": "RajaShankari",
+      "dob": "2005-10-05",
+      "email": "rajashankari@gmail.com",
+      "phone": "9089789090",
+      "password": "Raja@123",
+      "address": "Kalapatti,\nCoimbatore",
+      "id": "igGkvTZGLzc"
+    },
+    {
+      "name": "Mouleesh",
+      "dob": "2010-03-28",
+      "email": "mouleesh@gmail.com",
+      "phone": "9090897878",
+      "password": "Mouleesh@123",
+      "address": "Visaka Nagar,\nMuthalipalayam",
+      "id": "sUV4H-2N8qA"
+    },
+    {
+      "name": "abinaya",
+      "dob": "2009-01-12",
+      "email": "abinaya@gmail.com",
+      "phone": "6789008655",
+      "password": "Abinaya@123",
+      "address": "Sathiyamangalam,\nErode",
+      "id": "TkQnrksmNVM"
+    },
+    {
+      "name": "Ajay",
+      "dob": "2000-02-05",
+      "email": "ajay@gmail.com",
+      "phone": "9090876443",
+      "password": "Ajay@123",
+      "address": "Sulur,\nCoimbatore",
+      "id": "QqDsfdKKmk8"
     }
   ],
   "tables": [
@@ -58,7 +130,7 @@
       "tableId": "F102",
       "tableNo": "2",
       "capacity": "8",
-      "tableType": "family",
+      "tableType": "Family",
       "diningArea": "Rooftop",
       "price": "1000",
       "id": "5seZsy61EUM",
@@ -77,17 +149,16 @@
       "tableId": "F101",
       "tableNo": "2",
       "capacity": "6",
-      "tableType": "family",
+      "tableType": "Family",
       "diningArea": "Indoor",
       "price": "1000",
       "status": "Available",
       "id": "H3T4MVwFAC8"
     },
     {
-      "tableId": "F103",
-      "tableNo": "1",
+      "tableId": "F203",
       "capacity": "6",
-      "tableType": "family",
+      "tableType": "Family",
       "diningArea": "Outdoor",
       "price": "1000",
       "status": "Not Available",
@@ -97,11 +168,48 @@
       "tableId": "V101",
       "tableNo": "1",
       "capacity": "6",
-      "tableType": "vip",
+      "tableType": "Vip",
       "diningArea": "Indoor",
-      "price": "1500",
-      "id": "5NYj5_u1jDo",
-      "deleted": false
+      "price": "2500",
+      "status": "Not Available",
+      "id": "5NYj5_u1jDo"
+    },
+    {
+      "tableId": "P101",
+      "tableNo": "1",
+      "capacity": "8",
+      "tableType": "Private",
+      "diningArea": "Indoor",
+      "price": "3000",
+      "status": "Available",
+      "id": "Z3QJIIgdf90"
+    },
+    {
+      "tableId": "C203",
+      "capacity": "2",
+      "tableType": "Couple",
+      "diningArea": "Outdoor",
+      "price": "500",
+      "status": "",
+      "id": "joHK7orhr8s"
+    },
+    {
+      "tableId": "V305",
+      "capacity": "6",
+      "tableType": "Vip",
+      "diningArea": "Rooftop",
+      "price": "4000",
+      "status": "Available",
+      "id": "kEV1yH5nZgo"
+    },
+    {
+      "tableId": "F102",
+      "capacity": "15",
+      "tableType": "Family",
+      "diningArea": "Indoor",
+      "price": "4000",
+      "status": "Available",
+      "id": "cmkXcO38KDc"
     }
   ],
   "bookingDetails": [
@@ -179,17 +287,147 @@
       "id": "bH616xLVFCI"
     },
     {
-      "customerId": "1",
+      "customerId": "iJ-pwh7Usn8",
+      "customerName": "Haripriya K",
       "tableId": "C101",
-      "bookingDate": "2026-06-27",
+      "tableType": "Couple",
+      "diningArea": "Indoor",
+      "capacity": "2",
+      "price": "1000",
+      "bookingDate": "2026-06-30",
+      "session": "Lunch",
+      "slot": "1:00 PM - 2:00 PM",
+      "guestCount": "2",
+      "bookingStatus": "Booked",
+      "bookedAt": "2026-06-29T07:05:03.512Z",
+      "id": "UDibzy0JmLA"
+    },
+    {
+      "customerId": "NKMASqbfNBw",
+      "customerName": "Devasree",
+      "tableId": "F203",
+      "bookingDate": "2026-06-30",
+      "session": "Dinner",
+      "slot": "7:00 PM - 8:00 PM",
+      "guestCount": "6",
+      "bookingStatus": "Booked",
+      "bookedAt": "2026-06-29T10:41:36.580Z",
+      "id": "KnokDeSYT-c"
+    },
+    {
+      "customerId": "O6tAh2XxIPc",
+      "customerName": "Danusree",
+      "tableId": "F101",
+      "bookingDate": "2026-06-28",
+      "session": "Breakfast",
+      "slot": "8:00 AM - 9:00 AM",
+      "guestCount": "3",
+      "bookingStatus": "Completed",
+      "bookedAt": "2026-06-29T13:14:32.185Z",
+      "id": "TJ6HpUpp_yg"
+    },
+    {
+      "customerId": "O6tAh2XxIPc",
+      "customerName": "Danusree",
+      "tableId": "F101",
+      "bookingDate": "2026-06-25",
+      "session": "Breakfast",
+      "slot": "8:00 AM - 9:00 AM",
+      "guestCount": "5",
+      "bookingStatus": "Completed",
+      "bookedAt": "2026-06-29T13:26:30.729Z",
+      "id": "sAnQgeyPcwQ"
+    },
+    {
+      "customerId": "O6tAh2XxIPc",
+      "customerName": "Danusree",
+      "tableId": "C101",
+      "bookingDate": "2026-06-29",
+      "session": "Breakfast",
+      "slot": "9:00 AM - 10:00 AM",
+      "guestCount": "2",
+      "bookingStatus": "Cancelled",
+      "bookedAt": "2026-06-29T13:28:31.832Z",
+      "id": "pcGGgsrpB-s",
+      "cancelledAt": "2026-06-29T13:28:54.761Z"
+    },
+    {
+      "customerId": "O6tAh2XxIPc",
+      "customerName": "Danusree",
+      "tableId": "C101",
+      "bookingDate": "2026-06-29",
       "session": "Breakfast",
       "slot": "8:00 AM - 9:00 AM",
       "guestCount": "2",
       "bookingStatus": "Completed",
-      "bookedAt": "2026-06-27T11:53:47.492Z",
-      "id": "jSTjLt8NKlY"
+      "bookedAt": "2026-06-29T13:28:39.128Z",
+      "id": "ZoSElLe6Ecs"
+    },
+    {
+      "customerId": "iJ-pwh7Usn8",
+      "customerName": "Haripriya K",
+      "tableId": "F101",
+      "tableType": "Family",
+      "diningArea": "Indoor",
+      "capacity": "6",
+      "price": "1000",
+      "bookingDate": "2026-06-29",
+      "session": "Dinner",
+      "slot": "9:00 PM - 10:00 PM",
+      "guestCount": "6",
+      "bookingStatus": "Booked",
+      "bookedAt": "2026-06-29T13:45:11.511Z",
+      "id": "yvID37YlBuM"
+    },
+    {
+      "customerId": "igGkvTZGLzc",
+      "customerName": "RajaShankari",
+      "tableId": "F101",
+      "tableType": "Family",
+      "diningArea": "Indoor",
+      "capacity": "6",
+      "price": "1000",
+      "bookingDate": "2026-06-30",
+      "session": "Breakfast",
+      "slot": "9:00 AM - 10:00 AM",
+      "guestCount": "6",
+      "bookingStatus": "Booked",
+      "bookedAt": "2026-06-29T13:54:45.439Z",
+      "id": "HE-HXRREq6A"
+    },
+    {
+      "customerId": "QqDsfdKKmk8",
+      "customerName": "Ajay",
+      "tableId": "F203",
+      "tableType": "Family",
+      "diningArea": "Outdoor",
+      "capacity": "6",
+      "price": "1000",
+      "bookingDate": "2026-06-30",
+      "session": "Dinner",
+      "slot": "8:00 PM - 9:00 PM",
+      "guestCount": "6",
+      "bookingStatus": "Cancelled",
+      "bookedAt": "2026-06-29T14:20:54.374Z",
+      "id": "fpYFSXDSdH8",
+      "cancelledAt": "2026-06-29T14:21:05.136Z"
+    },
+    {
+      "customerId": "QqDsfdKKmk8",
+      "customerName": "Ajay",
+      "tableId": "F101",
+      "tableType": "Family",
+      "diningArea": "Indoor",
+      "capacity": "6",
+      "price": "1000",
+      "bookingDate": "2026-06-30",
+      "session": "Dinner",
+      "slot": "7:00 PM - 8:00 PM",
+      "guestCount": "6",
+      "bookingStatus": "Booked",
+      "bookedAt": "2026-06-29T14:21:33.814Z",
+      "id": "1KzX6hyxACo"
     }
   ],
-  "slots": [],
   "$schema": "./node_modules/json-server/schema.json"
 }

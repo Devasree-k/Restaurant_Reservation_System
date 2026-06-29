@@ -1,5 +1,8 @@
+body{
+    background-color: rgb(255, 245, 225);
+}
+
 .custom-bg{
-    /* background: linear-gradient(to right, #0066ff, #66ffff); */
     background: linear-gradient(to right, #b95135, #f3b258 );
 }
 
@@ -7,17 +10,31 @@
     top: 0;
     right: 0;
     background: linear-gradient(to bottom, #b95135, #f3b258 );
-    height: 100vh;
+    height: auto;
 }
 
 .custom-color{
     background: #f3b258;
 }
 
+.card{
+    transition:
+        transform .35s ease,
+        box-shadow .35s ease,
+        border-color .35s ease;
+}
+
+.card:hover{
+    transform:translateY(-8px) scale(1.02);
+    box-shadow:0 20px 40px rgba(0,0,0,.18);
+    border:1px solid #f3b258;
+}
+
 /* dark mode */
 
 body.dark-mode{
-    background: #121212;
+    /* background: linear-gradient(to bottom, #784632, #907444); */
+    background: linear-gradient(to right, #a18051, #654b29);
     color: #f5f5f5;
 }
 
@@ -28,7 +45,7 @@ body.dark-mode .custom-bg{
 
 /* Sidebar */
 body.dark-mode .sidebar{
-    background: linear-gradient(to bottom,#2b1a12,#5b3b1d);
+    background: linear-gradient(to bottom,#2b1a12,#81562e);
 }
 
 /* Sidebar Menu */
@@ -50,10 +67,12 @@ body.dark-mode .list-group-item.active{
 
 /* Cards */
 body.dark-mode .card{
-    background:#1f1f1f;
+    background:linear-gradient(to left,#8c8175, #554634);
     color:#fff;
-    border:1px solid #343434;
+    border:1px solid #943636;
 }
+
+
 
 /* Tables */
 body.dark-mode .table{
