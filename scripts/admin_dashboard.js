@@ -1,9 +1,11 @@
 let allCustomers=[];
 let allTables=[];
 let allReservations=[];
+let filteredCustomers=[];
+let filteredReservations = [];
 let editingId=null;
 
-const rows_per_page=10;
+const rows_per_page=5;
 let customerPage = 1;
 let tablePage = 1;
 let reservationPage = 1;
@@ -16,11 +18,18 @@ $(document).ready(async function(){
     DashboardCount();
     loadCustomers();
     loadTableDetails();
-    loadReservations();
+    await updateCompletedBookings();
+    await loadReservations();
 
     $("#SaveTableDetails").click(saveTable);
     $("#logoutBtn").click(logout);
 
+    $("#customerSearch").on("keyup", filterCustomers );
+    $("#bookingSearch").on("keyup", filterReservations);
+    $("#bookingStatusFilter").on("change", filterReservations);
+    $("#sessionFilter").on("change", filterReservations);
+    $("#bookingDateFilter").on("change", filterReservations);
+    $("#bookingSort").on("change", filterReservations);
     
 });
 
@@ -75,6 +84,7 @@ async function loadCustomers(){
     try{
         const response=await fetch(API.customers);
         allCustomers=await response.json();
+        filteredCustomers=[...allCustomers];
         showCustomerPage(1);
     }catch(error){
         console.error("Customer details load error ");
@@ -87,7 +97,7 @@ function showCustomerPage(page){
     const data = paginate(allCustomers,page);
     DisplayCustomers(data);
     createPagination(
-        allCustomers,
+        filteredCustomers,
         page,
         "customerPagination",
         "showCustomerPage"
@@ -110,6 +120,17 @@ function DisplayCustomers(customers){
         </tr>
         `;
     });
+}
+
+//filter for customer management section
+function filterCustomers(){
+    const keyword=$("#customerSearch").val().toLowerCase().trim();
+    filteredCustomers=allCustomers.filter(customer=>
+        customer.name.toLowerCase().includes(keyword) ||
+        customer.phone.includes(keyword) ||
+        customer.email.toLowerCase().includes(keyword)
+    )
+    showCustomerPage(1);
 }
 
 //save tables details
@@ -175,11 +196,26 @@ async function loadTableDetails() {
     try{
         const response=await fetch(API.tables);
         allTables=await response.json();
-        displayTables(allTables.filter(t=>!t.deleted));
+        showTablePage(1);
+        // displayTables(allTables.filter(t=>!t.deleted));
         displayTrash(allTables.filter(t=>t.deleted));
     }catch(error){
         console.error("Table loading error",error);
     }
+}
+
+//showtable function
+function showTablePage(page){
+    tablePage = page;
+    const activeTables = allTables.filter(t=>!t.deleted);
+    const pageData = paginate(activeTables,page);
+    displayTables(pageData);
+    createPagination(
+        activeTables,
+        page,
+        "TablesPagination",
+        "showTablePage"
+    );
 }
 
 
@@ -336,7 +372,9 @@ async function loadReservations(){
                     ""
             };
         });
-        displayReservations(allReservations);
+        // displayReservations(allReservations);
+        filteredReservations=[...allReservations];
+        showReservationPage(1);
     }
 
     catch(error){
@@ -398,7 +436,7 @@ function createPagination(data, currentPage, containerId, callback) {
     const totalPages = Math.ceil(data.length / rows_per_page);
     const container = document.getElementById(containerId);
     container.innerHTML = "";
-    if(totalPages <= 1) return;
+    if(totalPages <= 0) return;
 
     // Previous
     container.innerHTML += `
@@ -431,7 +469,6 @@ function createPagination(data, currentPage, containerId, callback) {
 
 //searching and sorting functionality
 function filterReservations() {
-
     let data = [...allReservations];
 
     // Search
@@ -447,28 +484,24 @@ function filterReservations() {
 
     // Status Filter
     const status = $("#bookingStatusFilter").val();
-
     if(status){
         data = data.filter(r => r.bookingStatus === status);
     }
 
     // Session Filter
     const session = $("#sessionFilter").val();
-
     if(session){
         data = data.filter(r => r.session === session);
     }
 
     // Date Filter
     const date = $("#bookingDateFilter").val();
-
     if(date){
         data = data.filter(r => r.bookingDate === date);
     }
 
     // Sorting
     switch($("#bookingSort").val()){
-
         case "customerAZ":
             data.sort((a,b)=>a.customerName.localeCompare(b.customerName));
             break;
@@ -494,7 +527,8 @@ function filterReservations() {
             break;
     }
 
-    showReservationPage(1, data);
+    filteredReservations=data;
+    showReservationPage(1);
 }
 
 function showReservationPage(page, data = allReservations){
@@ -506,7 +540,7 @@ function showReservationPage(page, data = allReservations){
     displayReservations(pageData);
 
     createPagination(
-        data,
+        filteredReservations,
         page,
         "ReservationPagination",
         "showReservationPage"
@@ -543,4 +577,25 @@ async function logout() {
     }).then(() => {
         window.location.href = "../pages/index.html"; 
     });
+}
+
+async function updateCompletedBookings(){
+    const response=await fetch(API.bookingDetails);
+    const bookings=await response.json();
+    const now=new Date();
+
+    for(const booking of  bookings){
+        if(booking.bookingStatus !== "Booked")
+            continue;
+
+        const endTime=booking.slot.split("-")[1].trim();
+        const bookingEnd=new Date(`${booking.bookingDate} ${endTime}`);
+        if(now>=bookingEnd){
+            await fetch(`${API.bookingDetails}/${booking.id}`,{
+                method:"PATCH",
+                headers:{"Content-Type":"application/json"},
+                body:JSON.stringify({bookingStatus:"Completed"})
+            });
+        }
+    }
 }

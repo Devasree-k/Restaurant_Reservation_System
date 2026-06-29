@@ -23,11 +23,15 @@ const SLOT_DATA = {
 
 
 $(document).ready(async function () {
-    
+    loadUserDetails();
+    loadProfile();
     loadTables();
-    loadReservedTable();
-    loadCancelledTable();
+    await updateCompletedBookings();
+    await loadReservedTable();
+    await loadCancelledTable();
     DashboardCount();
+    loadCompletedTable();
+
     $("#bookDate").change(loadSlots);
     $("#mealSession").change(loadSlots);
     $("#confirmBooking").click(confirmBooking);
@@ -36,6 +40,16 @@ $(document).ready(async function () {
     $("#logoutBtn").click(logout);
 
 });
+
+//load user detail
+function loadUserDetails(){
+    if(!currentUser){
+        return;
+    }
+    $("#userName").text(currentUser.name);
+    $("#userEmail").text(currentUser.email);
+}
+
 
 //load the counter dynamically
 async function DashboardCount() {
@@ -443,12 +457,83 @@ async function searchTables(){
 
     const filteredTables = availableTables.filter(table=>{
         return (
+            !table.deleted &&
             Number(table.capacity)>=guests &&
             !bookedTableIds.includes(table.tableId)
         );
     });
     displayAvailableTables(filteredTables);
 }
+
+
+//load completed table function
+async function loadCompletedTable(){
+    const response = await fetch(API.bookingDetails);
+    const bookings= await response.json();
+    const completed=bookings.filter(b=>
+        b.customerId === currentUser.id &&
+        b.bookingStatus ==="Completed"
+    );
+    displayCompletedTable(completed);
+}
+
+//Display Completed table
+function displayCompletedTable(bookings){
+    const container=$("#CompletedContainer");
+    container.empty();
+    if(bookings.length===0){
+        container.append(`
+            <div class="col-12 text-center">
+                <h3>No Completed Bookings</h3>
+            </div>`);
+        return;
+    }
+    bookings.forEach(booking => {
+        container.append(`
+            <div class="col-md-4">
+                <div class="card border-success shadow">
+
+                    <div class="card-body">
+                        <h5>${booking.tableId}</h5>
+                        <p>Date : ${booking.bookingDate}</p
+                        <p>Session : ${booking.session}</p>
+                        <p>Slot : ${booking.slot}</p>
+                        <span class="badge bg-success">
+                            Completed
+                        </span>
+                    </div>
+
+                </div>
+            </div>
+        `);
+    });
+}
+
+//Completed status change
+async function updateCompletedBookings(){
+    const response = await fetch(API.bookingDetails);
+    const bookings = await response.json();
+    const now = new Date();
+
+    for(const booking of bookings){
+        if(booking.bookingStatus !== "Booked")
+            continue;
+        const endTime = booking.slot.split("-")[1].trim();
+        const bookingEnd = new Date(
+            `${booking.bookingDate} ${endTime}`
+        );
+
+        if(now >= bookingEnd){
+
+            await fetch(`${API.bookingDetails}/${booking.id}`,{
+                method:"PATCH",
+                headers:{"Content-Type":"application/json"},
+                body:JSON.stringify({ bookingStatus:"Completed"})
+            });
+        }
+    }
+}
+
 
 //logout function
 async function logout(){
@@ -474,4 +559,19 @@ async function logout(){
     }).then(()=>{
         window.location.href="../pages/login.html";
     });
+}
+
+
+//offcanvas
+function loadProfile(){
+
+    if(!currentUser) return;
+
+    $("#profileId").text(currentUser.id);
+    $("#profileName").text(currentUser.name);
+    $("#profileName2").text(currentUser.name);
+    $("#profileEmail").text(currentUser.email);
+    $("#profileEmail2").text(currentUser.email);
+    $("#profileRole").text(currentUser.role);
+
 }

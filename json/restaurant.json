@@ -113,7 +113,7 @@
       "session": "Breakfast",
       "slot": "8:00 AM - 9:00 AM",
       "guestCount": "5",
-      "bookingStatus": "Booked",
+      "bookingStatus": "Completed",
       "bookedAt": "2026-06-27T10:35:59.606Z",
       "id": "uu7FI4OCNvU"
     },
@@ -125,7 +125,7 @@
       "session": "Lunch",
       "slot": "1:00 PM - 2:00 PM",
       "guestCount": "6",
-      "bookingStatus": "Booked",
+      "bookingStatus": "Completed",
       "bookedAt": "2026-06-27T10:40:31.272Z",
       "id": "-viEgrfffpA"
     },
@@ -150,7 +150,7 @@
       "session": "Dinner",
       "slot": "8:00 PM - 9:00 PM",
       "guestCount": "5",
-      "bookingStatus": "Booked",
+      "bookingStatus": "Completed",
       "bookedAt": "2026-06-27T11:07:36.262Z",
       "id": "RDjeZ7FF_mU"
     },
@@ -162,7 +162,7 @@
       "session": "Dinner",
       "slot": "7:00 PM - 8:00 PM",
       "guestCount": "5",
-      "bookingStatus": "Booked",
+      "bookingStatus": "Completed",
       "bookedAt": "2026-06-27T11:28:42.173Z",
       "id": "rms2xj3WYKU"
     },
@@ -174,7 +174,7 @@
       "session": "Dinner",
       "slot": "9:00 PM - 10:00 PM",
       "guestCount": "6",
-      "bookingStatus": "Booked",
+      "bookingStatus": "Completed",
       "bookedAt": "2026-06-27T11:28:57.437Z",
       "id": "bH616xLVFCI"
     },
@@ -185,7 +185,7 @@
       "session": "Breakfast",
       "slot": "8:00 AM - 9:00 AM",
       "guestCount": "2",
-      "bookingStatus": "Booked",
+      "bookingStatus": "Completed",
       "bookedAt": "2026-06-27T11:53:47.492Z",
       "id": "jSTjLt8NKlY"
     }

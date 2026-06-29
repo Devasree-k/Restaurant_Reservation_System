@@ -12,13 +12,6 @@ body{
     background: linear-gradient(to right, #f3b258, #f8deba );
 }
 
-.sidebar{
-    top: 0;
-    right: 0;
-    background: linear-gradient(to bottom, #b95135, #f3b258 );
-    height: 100vh;
-}
-
 .hero-card{
     position: relative;
     border-radius: 20px;
@@ -35,4 +28,161 @@ body{
     bottom: 25px;
     left:20px;
     color: white;
+}
+
+/* dark mode */
+
+body.dark-mode{
+    background:#2b211d;
+    color:#f5ede3;
+}
+
+/* Navbar */
+
+body.dark-mode .nav-bg{
+    background:linear-gradient(to right,#4b2e26,#8a5b34);
+}
+
+/* Cards */
+
+body.dark-mode .card{
+    background:#3a2d28;
+    color:#f8f3ec;
+    border:1px solid #6b4b3d;
+}
+
+body.dark-mode .custom-bg{
+    background:linear-gradient(to right,#5d4037,#8d6e63);
+}
+
+/* Carousel */
+
+body.dark-mode .carousel-inner{
+    border-radius:15px;
+}
+
+body.dark-mode .hero-text{
+    color:#fff6ec;
+    text-shadow:2px 2px 8px black;
+}
+
+/* Search Card */
+
+body.dark-mode #searchCard .card{
+    background:#45352f;
+}
+
+/* Inputs */
+
+body.dark-mode .form-control,
+body.dark-mode .form-select{
+    background:#5a463f;
+    color:white;
+    border:1px solid #9c7b63;
+}
+
+body.dark-mode .form-control::placeholder{
+    color:#ddd;
+}
+
+body.dark-mode .form-control:focus,
+body.dark-mode .form-select:focus{
+    background:#5a463f;
+    color:white;
+    border-color:#d8a15b;
+    box-shadow:0 0 8px rgba(216,161,91,.4);
+}
+
+/* Sections */
+
+body.dark-mode h1,
+body.dark-mode h2,
+body.dark-mode h3,
+body.dark-mode h4,
+body.dark-mode h5,
+body.dark-mode h6,
+body.dark-mode p,
+body.dark-mode label,
+body.dark-mode span{
+    color:#f5ede3;
+}
+
+/* Available Cards */
+
+body.dark-mode .badge.bg-success{
+    background:#2e7d32 !important;
+}
+
+body.dark-mode .badge.bg-danger{
+    background:#b71c1c !important;
+}
+
+/* Reservation Cards */
+
+body.dark-mode .border-danger{
+    border-color:#ff7b7b !important;
+}
+
+body.dark-mode .border-success{
+    border-color:#81c784 !important;
+}
+
+/* Modal */
+
+body.dark-mode .modal-content{
+    background:#3b2d27;
+    color:white;
+}
+
+body.dark-mode .modal-header,
+body.dark-mode .modal-footer{
+    border-color:#6f5648;
+}
+
+/* Offcanvas */
+
+body.dark-mode .offcanvas{
+    background:#352823;
+    color:white;
+}
+
+body.dark-mode .offcanvas .table{
+    color:white;
+}
+
+body.dark-mode .offcanvas .table td,
+body.dark-mode .offcanvas .table th{
+    border-color:#5d4a42;
+}
+
+/* Links */
+
+body.dark-mode a{
+    color:#f4d6a0;
+}
+
+body.dark-mode a:hover{
+    color:#ffd580;
+}
+
+/* Buttons */
+
+body.dark-mode .btn-outline-light{
+    color:white;
+    border-color:#ddd;
+}
+
+body.dark-mode .btn-outline-light:hover{
+    background:white;
+    color:#2b211d;
+}
+
+body.dark-mode .btn-outline-primary{
+    border-color:#d8a15b;
+    color:#ffd580;
+}
+
+body.dark-mode .btn-outline-primary:hover{
+    background:#d8a15b;
+    color:#2b211d;
 }
